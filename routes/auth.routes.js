@@ -50,6 +50,7 @@ router.post("/signup", (req, res) => {
             });
             return;
           } else {
+            console.log(err)
             res.status(500).json({
               errorMessage: "Something went wrong! Please try again.",
             });

@@ -11,6 +11,10 @@ const ChallengeSchema = new Schema({
   points: {
     type: String,
     required: true
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 })
 
