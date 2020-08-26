@@ -1,58 +1,57 @@
-require('dotenv').config();
-
-const bodyParser   = require('body-parser');
-const cookieParser = require('cookie-parser');
 const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
+const app          = express();
 const mongoose     = require('mongoose');
-const logger       = require('morgan');
 const path         = require('path');
+require('./config/database.config')
+const logger       = require('morgan');
+const session      = require('express-session');
+const MongoStore   = require('connect-mongo')(session);
+require('dotenv').config();
+const cors         = require('cors')
+const cookieParser = require('cookie-parser');
+const bodyParser   = require('body-parser');
 
-
-mongoose
-  .connect('mongodb://localhost/ecohero-server-side', {useNewUrlParser: true})
-  .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+app.use(
+  session({
+    secret: 'my-secret-weapon',
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+      maxAge: 60 * 60 * 24 * 1000, //60 sec * 60 min * 24hrs = 1 day (in milliseconds)
+    },
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      //time to live (in seconds)
+      ttl: 60 * 60 * 24,
+      autoRemove: 'disabled',
+    }),
   })
-  .catch(err => {
-    console.error('Error connecting to mongo', err)
-  });
-
-const app_name = require('./package.json').name;
-const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
-
-const app = express();
+);
 
 // Middleware Setup
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Express View engine setup
-
-app.use(require('node-sass-middleware')({
-  src:  path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  sourceMap: true
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
 }));
-      
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+//Register routes
+const authRoutes = require('./routes/auth.routes');
+app.use('/auth', authRoutes);
 
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
-// default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
-
-
-
-const index = require('./routes/index');
-app.use('/', index);
-
-
-module.exports = app;
+//Start the server to begin listening on a port
+// make sure you don't run it on port 3000 because 
+// your react app uses port 3000. 
+app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
+  console.log('Server is running')
+})
