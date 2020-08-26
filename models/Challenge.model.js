@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 
 const ChallengeSchema = new Schema({
-  username: {
+  title: {
     type: String,
     required: true,
     unique: true

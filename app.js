@@ -48,6 +48,10 @@ app.use('/auth', authRoutes);
 const userRoutes = require("./routes/user.routes");
 app.use("/users", userRoutes)
 
+//Challenges routes
+const challengeRoutes = require('./routes/challenge.routes');
+app.use('/challenges', challengeRoutes)
+
 // app.use((req, res, next) => {
 // //If no routes match, send them the React HTML.
 // res.sendFile(__dirname + "/public/index.html");

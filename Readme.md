@@ -143,15 +143,19 @@ achievements: [{
 This model will be seeded first and then the user will be able to add more challenges but it will never be edited.
 ```javascript
 {
-	name: {
+	title: {
 		type: String,
 		required: true,
-		unique: true ???
+		unique: true
 	},
 	description: String,
 	points: {
 		type: Number,
 		required: true
+	},
+	creator: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: “User”
 	}
 ```
 
@@ -196,7 +200,7 @@ finishing-date: Date
 | DELETE | /achievements/:achievID | | | | Deletes a specific achievement |
 | GET   | /achievements/:achievID | | | | Shows a specific achievement|
 | GET   | /challenges | | | | Shows all the challenges |
-| GET   | /challenges/challengeID | | | | Shows the details of a specific challenge |
+| GET   | /challenges/:challengeID | | | | Shows the details of a specific challenge |
 | POST  | /challenges/create | {name, description, points} | | | Creates a new challenge |
 
 
