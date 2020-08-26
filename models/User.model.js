@@ -28,11 +28,7 @@ const UserSchema = new Schema({
     type: String,
     enum: ["New Hero", "Chill Hero", "Smart Hero", "Big Hero", "Super Hero"],
     default: "New Hero"
-  },
-  achievements: [{
-    type: Schema.Types.ObjectId,
-    ref: "Achievement"
-  }]
+  }
 })
 
 

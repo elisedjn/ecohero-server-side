@@ -3,14 +3,25 @@ const router = express.Router()
 
 let AchievementModel = require('../models/Achievement.model')
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
+const UserModel = require('../models/User.model');
 
-
-
-
+//Create an achievement and populate it in the user model
+router.post('/create/:challengeID/:userID', (req, res) => {
+  let newAchievement = {
+    challenge: req.params.challengeID, 
+    user: req.params.userID,
+  }
+  AchievementModel.create(newAchievement)
+    .then((response) => {
+      res.status(200).json(response)
+    })
+})
 
 // Shows a specific achievement // FULL ROUTE -> /achievemenets/:achievID
-router.get('/:achievID', isLoggedIn, (req, res) => {
-  AchievementModel.findById(req.params.id)
+router.get('/:achievID', (req, res) => {
+  AchievementModel.findById(req.params.achievID)
+  .populate('challenge')
+  .populate('user')
   .then((response) => {
     res.status(200).json(response)
   })
@@ -23,13 +34,14 @@ router.get('/:achievID', isLoggedIn, (req, res) => {
 })
 
 
-
 // Edits a specific achievement // FULL ROUTE -> /achievements/:achievID
-router.patch("/:achievID", isLoggedIn, (req,res) => {
-    let id = req.params.id
+router.patch("/:achievID", (req,res) => {
+    let id = req.params.achievID
     const {completed, image, finishing_date} = req.body
 
     AchievementModel.findByIdAndUpdate(id, {$set: {completed: completed, image: image, finishing_date}})
+    .populate('challenge')
+    .populate('user')
     .then((response) => {
        res.status(200).json(response)
     })
@@ -42,10 +54,9 @@ router.patch("/:achievID", isLoggedIn, (req,res) => {
 })
 
 
-
 // Deletes a specific achievement // FULL ROUTE -> /achievemenets/:achievID
-router.delete('/:achievID', isLoggedIn, (req, res) => {
-  AchievementModel.findByIdAndDelete(req.params.id)
+router.delete('/:achievID', (req, res) => {
+  AchievementModel.findByIdAndDelete(req.params.achievID)
         .then((response) => {
              res.status(200).json(response)
         })
@@ -56,11 +67,5 @@ router.delete('/:achievID', isLoggedIn, (req, res) => {
              })
         })  
 })
-
-
-
-
-
-
 
 module.exports = router;

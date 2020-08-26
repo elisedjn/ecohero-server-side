@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs')
 
 let UserModel = require('../models/User.model')
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
+const AchievementModel = require('../models/Achievement.model');
 
 
 
@@ -90,9 +91,9 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
 
 // Shows all the achievements (completed or not) of a specific user // FULL ROUTE -> /users/:id/achievements
 router.get("/:id/achievements", isLoggedIn, (req,res) => {
-    UserModel.findById(req.params.id)
+    AchievementModel.find({user: req.params.id})
     .then((result) => {
-      res.status(200).json(result.achievements)
+      res.status(200).json(result)
      })
     .catch((err) => {
       res.status(500).json({

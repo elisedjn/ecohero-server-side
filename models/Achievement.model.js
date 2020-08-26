@@ -8,7 +8,8 @@ const AchievementSchema = new Schema({
   },
   completed: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
   image: String,  //URL to Cloudinary
   user: {
