@@ -31,6 +31,9 @@ router.get("/users/:id", isLoggedIn, (req,res) => {
 })
 
 router.patch("/users/:id/edit", isLoggedIn, (req, res) => {
+      let id = req.params.id
+      const {name, image, email, password} = req.params
+      
 
-  
+
 })
