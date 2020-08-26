@@ -48,10 +48,14 @@ app.use('/auth', authRoutes);
 const userRoutes = require("./routes/user.routes");
 app.use("/users", userRoutes)
 
-// app.use((req, res, next) => {
-// //If no routes match, send them the React HTML.
-// res.sendFile(__dirname + "/public/index.html");
-// });
+//Achievement routes
+const achievementRoutes = require("./routes/achievement.routes");
+app.use("/achievements", achievementRoutes)
+
+app.use((req, res, next) => {
+//If no routes match, send them the React HTML.
+res.sendFile(__dirname + "/public/index.html");
+});
 
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 
