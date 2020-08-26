@@ -52,10 +52,14 @@ app.use("/users", userRoutes)
 const challengeRoutes = require('./routes/challenge.routes');
 app.use('/challenges', challengeRoutes)
 
-// app.use((req, res, next) => {
-// //If no routes match, send them the React HTML.
-// res.sendFile(__dirname + "/public/index.html");
-// });
+//Achievement routes
+const achievementRoutes = require("./routes/achievement.routes");
+app.use("/achievements", achievementRoutes)
+
+app.use((req, res, next) => {
+//If no routes match, send them the React HTML.
+res.sendFile(__dirname + "/public/index.html");
+});
 
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 

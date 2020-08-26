@@ -18,7 +18,7 @@ router.get("/leaderboard", isLoggedIn, (req, res) => {
         res.status(500).json({
            error: 'Something went wrong',
            message: err
-      })
+        })
     })
 })
 
