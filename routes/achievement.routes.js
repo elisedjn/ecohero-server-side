@@ -10,7 +10,7 @@ const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is
 
 // Shows a specific achievement // FULL ROUTE -> /achievemenets/:achievID
 router.get('/:achievID', isLoggedIn, (req, res) => {
-  AchievementModel.findById(req.params.id)
+  AchievementModel.findById(req.params.achievId)
   .then((response) => {
     res.status(200).json(response)
   })
@@ -26,7 +26,7 @@ router.get('/:achievID', isLoggedIn, (req, res) => {
 
 // Edits a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.patch("/:achievID", isLoggedIn, (req,res) => {
-    let id = req.params.id
+    let id = req.params.achievId
     const {completed, image, finishing_date} = req.body
 
     AchievementModel.findByIdAndUpdate(id, {$set: {completed: completed, image: image, finishing_date}})
@@ -45,7 +45,7 @@ router.patch("/:achievID", isLoggedIn, (req,res) => {
 
 // Deletes a specific achievement // FULL ROUTE -> /achievemenets/:achievID
 router.delete('/:achievID', isLoggedIn, (req, res) => {
-  AchievementModel.findByIdAndDelete(req.params.id)
+  AchievementModel.findByIdAndDelete(req.params.achievId)
         .then((response) => {
              res.status(200).json(response)
         })
