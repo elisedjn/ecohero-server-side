@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 const AchievementSchema = new Schema({
   challenge: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Challenge"
   },
   completed: {
@@ -12,7 +12,7 @@ const AchievementSchema = new Schema({
   },
   image: String,  //URL to Cloudinary
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User"
   },
   starting_date: {

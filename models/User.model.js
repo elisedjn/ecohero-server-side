@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
-  password: {
+  passwordHash: {
     type: String,
     required: true
   },
@@ -30,7 +30,7 @@ const UserSchema = new Schema({
     default: "New Hero"
   },
   achievements: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Achievement"
   }]
 })
