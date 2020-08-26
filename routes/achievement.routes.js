@@ -6,7 +6,7 @@ const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is
 const UserModel = require('../models/User.model');
 
 //Create an achievement and populate it in the user model
-router.post('/create/:challengeID/:userID', (req, res) => {
+router.post('/create/:challengeID/:userID', isLoggedIn, (req, res) => {
   let newAchievement = {
     challenge: req.params.challengeID, 
     user: req.params.userID,
@@ -18,10 +18,8 @@ router.post('/create/:challengeID/:userID', (req, res) => {
 })
 
 // Shows a specific achievement // FULL ROUTE -> /achievemenets/:achievID
-router.get('/:achievID', (req, res) => {
-  AchievementModel.findById(req.params.achievID)
-  .populate('challenge')
-  .populate('user')
+router.get('/:achievID', isLoggedIn, (req, res) => {
+  AchievementModel.findById(req.params.achievId)
   .then((response) => {
     res.status(200).json(response)
   })
@@ -35,8 +33,8 @@ router.get('/:achievID', (req, res) => {
 
 
 // Edits a specific achievement // FULL ROUTE -> /achievements/:achievID
-router.patch("/:achievID", (req,res) => {
-    let id = req.params.achievID
+router.patch("/:achievID", isLoggedIn, (req,res) => {
+    let id = req.params.achievId
     const {completed, image, finishing_date} = req.body
 
     AchievementModel.findByIdAndUpdate(id, {$set: {completed: completed, image: image, finishing_date}})
@@ -55,8 +53,8 @@ router.patch("/:achievID", (req,res) => {
 
 
 // Deletes a specific achievement // FULL ROUTE -> /achievemenets/:achievID
-router.delete('/:achievID', (req, res) => {
-  AchievementModel.findByIdAndDelete(req.params.achievID)
+router.delete('/:achievID', isLoggedIn, (req, res) => {
+  AchievementModel.findByIdAndDelete(req.params.achievId)
         .then((response) => {
              res.status(200).json(response)
         })
