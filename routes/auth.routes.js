@@ -40,6 +40,7 @@ router.post("/signup", (req, res) => {
     bcrypt.hash(password, salt).then((passwordHash) => {
       UserModel.create({ email, username, passwordHash })
         .then((user) => {
+          user.passwordHash = "***";
           req.session.loggedInUser = user;
           res.status(200).json(user);
         })
@@ -84,6 +85,7 @@ router.post("/signin", (req, res) => {
       bcrypt.compare(password, userData.passwordHash)
         .then((doesItMatch) => {
           if (doesItMatch) {
+            userData.passwordHash = "***";
             req.session.loggedInUser = userData;
             res.status(200).json(userData);
           } else {
