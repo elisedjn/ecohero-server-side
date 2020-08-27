@@ -4,6 +4,9 @@ const router = express.Router()
 let AchievementModel = require('../models/Achievement.model')
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
 const UserModel = require('../models/User.model');
+const { route } = require('./user.routes');
+
+
 
 //Get all the completed achievements from all users // FULL ROUTE -> /achievements/allcompleted
 router.get('/allcompleted', (req, res) => {
@@ -74,7 +77,7 @@ router.patch("/:achievID", (req,res) => {
 })
 
 
-// Deletes a specific achievement // FULL ROUTE -> /achievemenets/:achievID
+// Deletes a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.delete('/:achievID', isLoggedIn, (req, res) => {
   AchievementModel.findByIdAndDelete(req.params.achievId)
         .then((response) => {
@@ -87,5 +90,24 @@ router.delete('/:achievID', isLoggedIn, (req, res) => {
              })
         })  
 })
+
+
+// Shows all the achievements of a specific user // FULL ROUTE -> /achievements/:userID
+router.get("/user/:userID", (req, res) => {
+  AchievementModel.find({user: req.params.userID})
+  .populate("challenge")
+  .then((response) => {
+    res.status(200).json(response)
+  })
+  .catch((err) => {
+    res.status(500).json({
+         error: 'Something went wrong',
+         message: err
+    })
+  })  
+})
+
+
+
 
 module.exports = router;
