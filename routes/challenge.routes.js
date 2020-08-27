@@ -6,7 +6,7 @@ const AchievementModel = require('../models/Achievement.model')
 const ChallengeModel = require('../models/Challenge.model')
 
 const { isLoggedIn } = require('../helpers/auth-helper');
-const { route } = require("./auth.routes");
+
 
 
 //Get all the challenges // FULL ROUTE -> /challenges
@@ -40,9 +40,17 @@ router.get('/:challengeId', (req, res) => {
 // Create a new challenge // FULL ROUTE -> challenges/create
 router.post('/create', isLoggedIn, (req, res) => {
   const {title, description, points} = req.body
+  console.log(req.body)
   ChallengeModel.create({title, description, points})
     .then((challenge) => {
       res.status(200).json(challenge)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({
+        error: 'Something went wrong',
+        message: err
+       })
     })
 })
 

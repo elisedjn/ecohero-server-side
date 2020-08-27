@@ -9,7 +9,7 @@ const ChallengeSchema = new Schema({
   },
   description: String,
   points: {
-    type: String,
+    type: Number,
     required: true
   },
   creator: {

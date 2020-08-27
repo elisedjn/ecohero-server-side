@@ -5,8 +5,24 @@ let AchievementModel = require('../models/Achievement.model')
 const { isLoggedIn } = require('../helpers/auth-helper'); // to check if user is loggedIn
 const UserModel = require('../models/User.model');
 
-//Create an achievement and populate it in the user model
-router.post('/create/:challengeID/:userID', isLoggedIn, (req, res) => {
+//Get all the completed achievements from all users // FULL ROUTE -> /achievements/allcompleted
+router.get('/allcompleted', (req, res) => {
+  AchievementModel.find({completed: true})
+    .populate('challenge')
+    .populate('user')
+    .then((response) => {
+      res.status(200).json(response)
+    })
+    .catch((err) => {
+      res.status(500).json({
+           error: 'Something went wrong',
+           message: err
+      })
+    })
+})
+
+//Create an achievement // FULL ROUTE -> /achievements/create/:challengeID/:userID
+router.post('/create/:challengeID/:userID', (req, res) => {
   let newAchievement = {
     challenge: req.params.challengeID, 
     user: req.params.userID,
@@ -15,9 +31,15 @@ router.post('/create/:challengeID/:userID', isLoggedIn, (req, res) => {
     .then((response) => {
       res.status(200).json(response)
     })
+    .catch((err) => {
+      res.status(500).json({
+           error: 'Something went wrong',
+           message: err
+      })
+    })
 })
 
-// Shows a specific achievement // FULL ROUTE -> /achievemenets/:achievID
+// Shows a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.get('/:achievID', isLoggedIn, (req, res) => {
   AchievementModel.findById(req.params.achievId)
   .then((response) => {
@@ -33,7 +55,7 @@ router.get('/:achievID', isLoggedIn, (req, res) => {
 
 
 // Edits a specific achievement // FULL ROUTE -> /achievements/:achievID
-router.patch("/:achievID", isLoggedIn, (req,res) => {
+router.patch("/:achievID", (req,res) => {
     let id = req.params.achievId
     const {completed, image, finishing_date} = req.body
 
