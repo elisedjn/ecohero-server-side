@@ -23,9 +23,9 @@ router.get("", (req, res) => {
     })
 })
 
-//Get a specific challenge based on its id // FULL ROUTE -> /challenges/:challengeId
-router.get('/:challengeId', (req, res) => {
-  ChallengeModel.findById(req.params.challengeId)
+//Get a specific challenge based on its id // FULL ROUTE -> /challenges/:challengeID
+router.get('/:challengeID', (req, res) => {
+  ChallengeModel.findById(req.params.challengeID)
     .then((challenge) => {
       res.status(200).json(challenge)
     })
