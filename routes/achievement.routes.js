@@ -61,7 +61,7 @@ router.get('/:achievID', (req, res) => {
 
 // Edits a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.patch("/:achievID", (req,res) => {
-    let id = req.params.achievId
+    let id = req.params.achievID
     const {completed, image, finishing_date} = req.body
 
     AchievementModel.findByIdAndUpdate(id, {$set: {completed: completed, image: image, finishing_date}})
