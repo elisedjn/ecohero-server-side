@@ -56,6 +56,10 @@ app.use('/challenges', challengeRoutes)
 const achievementRoutes = require("./routes/achievement.routes");
 app.use("/achievements", achievementRoutes)
 
+// Upload routes
+const uploadRoutes = require('./routes/fileUpload.routes');
+app.use('/upload', uploadRoutes)
+
 app.use((req, res, next) => {
 //If no routes match, send them the React HTML.
 res.sendFile(__dirname + "/public/index.html");

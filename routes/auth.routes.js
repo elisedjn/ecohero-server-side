@@ -111,7 +111,7 @@ router.post("/signin", (req, res) => {
     });
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', isLoggedIn,   (req, res) => {
   req.session.destroy();
   res
   .status(204) //  No Content
