@@ -8,6 +8,7 @@ const ChallengeSchema = new Schema({
     unique: true
   },
   description: String,
+  fact: String,
   points: {
     type: Number,
     required: true
