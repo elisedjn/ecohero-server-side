@@ -44,7 +44,7 @@ router.post('/create/:challengeID/:userID', isLoggedIn, (req, res) => {
 
 // Shows a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.get('/:achievID', (req, res) => {
-  AchievementModel.findById(req.params.achievId)
+  AchievementModel.findById(req.params.achievID)
   .populate('challenge')
   .populate('user')
   .then((response) => {
@@ -63,6 +63,7 @@ router.get('/:achievID', (req, res) => {
 router.patch("/:achievID", (req,res) => {
     let id = req.params.achievID
     const {completed, image, finishing_date} = req.body
+    console.log("value received", req.body)
 
     AchievementModel.findByIdAndUpdate(id, {$set: {completed: completed, image: image, finishing_date}})
     .populate('challenge')
