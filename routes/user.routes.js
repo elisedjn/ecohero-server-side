@@ -40,7 +40,7 @@ router.get("/:id", isLoggedIn, (req, res) => {
 router.patch("/:id/edit", isLoggedIn, (req, res) => {
   let id = req.params.id;
   console.log(req.body);
-  const { username, image, email, password } = req.body;
+  const { username, image, email, password, points, rank } = req.body;
 
   if (!username || !email) {
     res.status(500).json({
@@ -73,7 +73,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
     bcrypt.genSalt(12).then((salt) => {
       bcrypt.hash(password, salt).then((passwordHash) => {
         UserModel.findByIdAndUpdate(id, {
-          $set: { username: username, image: image, email: email, passwordHash: passwordHash },
+          $set: { username: username, image: image, email: email, passwordHash: passwordHash, points: points, rank:rank },
         })
           .then((user) => {
             user.passwordHash = "***";
@@ -90,7 +90,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
     });
   } else {
     UserModel.findByIdAndUpdate(id, {
-      $set: { username: username, image: image, email: email },
+      $set: { username: username, image: image, email: email, points: points, rank:rank },
     })
       .then((user) => {
         user.passwordHash = "***";

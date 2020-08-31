@@ -95,7 +95,7 @@ router.delete('/:achievID', isLoggedIn, (req, res) => {
 })
 
 
-// Shows all the achievements of a specific user // FULL ROUTE -> /achievements/:userID
+// Shows all the achievements of a specific user // FULL ROUTE -> /achievements/user/:userID
 router.get("/user/:userID", (req, res) => {
   AchievementModel.find({user: req.params.userID})
   .populate("challenge")
