@@ -122,4 +122,21 @@ router.get("/:id/achievements", isLoggedIn, (req, res) => {
     });
 });
 
+// Deletes a user from the data base // FULL ROUTE -> /users/:id
+router.delete('/:id', isLoggedIn, (req, res) => {
+  UserModel.findByIdAndDelete(req.params.id)
+    .then((result) => {
+      AchievementModel.deleteMany({user: req.params.id})
+        .then((response) => {
+             res.status(200).json(response)
+        })      
+    })
+        .catch((err) => {
+             res.status(500).json({
+                  error: 'Something went wrong',
+                  message: err
+             })
+        })  
+})
+
 module.exports = router;
