@@ -82,7 +82,7 @@ router.patch("/:achievID", (req,res) => {
 
 // Deletes a specific achievement // FULL ROUTE -> /achievements/:achievID
 router.delete('/:achievID', isLoggedIn, (req, res) => {
-  AchievementModel.findByIdAndDelete(req.params.achievId)
+  AchievementModel.findByIdAndDelete(req.params.achievID)
         .then((response) => {
              res.status(200).json(response)
         })

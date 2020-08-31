@@ -23,7 +23,7 @@ router.get("/leaderboard", (req, res) => {
 });
 
 // Shows the details of a specific user // FULL ROUTE -> /users/:id
-router.get("/:id", isLoggedIn, (req, res) => {
+router.get("/:id", (req, res) => {
   UserModel.findById(req.params.id)
     .then((response) => {
       res.status(200).json(response);
