@@ -42,23 +42,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Register routes
 const authRoutes = require('./routes/auth.routes');
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 //User routes
 const userRoutes = require("./routes/user.routes");
-app.use("/users", userRoutes)
+app.use("/api/users", userRoutes)
 
 //Challenges routes
 const challengeRoutes = require('./routes/challenge.routes');
-app.use('/challenges', challengeRoutes)
+app.use('/api/challenges', challengeRoutes)
 
 //Achievement routes
 const achievementRoutes = require("./routes/achievement.routes");
-app.use("/achievements", achievementRoutes)
+app.use("/api/achievements", achievementRoutes)
 
 // Upload routes
 const uploadRoutes = require('./routes/fileUpload.routes');
-app.use('/upload', uploadRoutes)
+app.use('/api/upload', uploadRoutes)
 
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 
