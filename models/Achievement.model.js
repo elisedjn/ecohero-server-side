@@ -11,7 +11,10 @@ const AchievementSchema = new Schema({
     required: true,
     default: false
   },
-  image: String,  //URL to Cloudinary
+  image: {
+    type:String, 
+    default: 'https://res.cloudinary.com/diwwshnym/image/upload/v1598962686/ecohero_logo_tqx7jk.png'
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User"

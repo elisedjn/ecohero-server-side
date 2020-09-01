@@ -18,7 +18,7 @@ const UserSchema = new Schema({
   },
   image: {
     type: String,
-    //default: https:A default picture image already in Cloudinary 
+    default: 'https://res.cloudinary.com/diwwshnym/image/upload/v1598962686/ecohero_logo_tqx7jk.png'
   },
   points: {
     type: Number,
