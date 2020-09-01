@@ -90,7 +90,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
     });
   } else {
     let updatedObject = {}
-    points === null ? updatedObject = { username: username, image: image, email: email} : updatedObject = { username: username, image: image, email: email, points: points, rank:rank }
+    !points ? updatedObject = { username: username, image: image, email: email} : updatedObject = { username: username, image: image, email: email, points: points, rank:rank }
     UserModel.findByIdAndUpdate(id, {
       $set: updatedObject,
     })
