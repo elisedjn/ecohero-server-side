@@ -73,7 +73,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
     bcrypt.genSalt(12).then((salt) => {
       bcrypt.hash(password, salt).then((passwordHash) => {
         UserModel.findByIdAndUpdate(id, {
-          $set: { username: username, image: image, email: email, passwordHash: passwordHash, points: points, rank:rank },
+          $set: { username: username, image: image, email: email, passwordHash: passwordHash },
         })
           .then((user) => {
             user.passwordHash = "***";
@@ -89,8 +89,10 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
       });
     });
   } else {
+    let updatedObject = {}
+    points === null ? updatedObject = { username: username, image: image, email: email} : updatedObject = { username: username, image: image, email: email, points: points, rank:rank }
     UserModel.findByIdAndUpdate(id, {
-      $set: { username: username, image: image, email: email, points: points, rank:rank },
+      $set: updatedObject,
     })
       .then((user) => {
         user.passwordHash = "***";
