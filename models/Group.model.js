@@ -16,7 +16,10 @@ const GroupSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  members: String
+  members: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
 })
 
 

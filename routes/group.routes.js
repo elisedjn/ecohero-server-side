@@ -6,7 +6,7 @@ const { isLoggedIn } = require("../helpers/auth-helper"); // to check if user is
 
 
 //Get all groups available // FULL ROUTE -> /groups
-router.get('/groups', isLoggedIn, (req, res) => {
+router.get('', (req, res) => {
   GroupModel.find()
     .then((response) => {
       res.status(200).json(response)
@@ -22,8 +22,9 @@ router.get('/groups', isLoggedIn, (req, res) => {
 
 //Create a group // FULL ROUTE -> /groups/create
 router.post('/create', isLoggedIn, (req, res) => {
-  const {name, description, location, date} = req.body
-  GroupModel.create({name, description, location, date})
+  const {name, description, location, date, user} = req.body
+  let members = [user]
+  GroupModel.create({name, description, location, date, members})
     .then((group) => {
       res.status(200).json(group)
     })
@@ -40,6 +41,7 @@ router.post('/create', isLoggedIn, (req, res) => {
 //Get a specific group based on it's id // FULL ROUTE -> /groups/:groupID
 router.get('/:groupID', (req, res) => {
   GroupModel.findById(req.params.groupID)
+    .populate('members')
     .then((group) => {
       res.status(200).json(group)
     })
