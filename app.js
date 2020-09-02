@@ -56,6 +56,10 @@ app.use('/challenges', challengeRoutes)
 const achievementRoutes = require("./routes/achievement.routes");
 app.use("/achievements", achievementRoutes)
 
+//Group routes
+const groupRoutes = require("./routes/group.routes");
+app.use("/group", achievementRoutes)
+
 // Upload routes
 const uploadRoutes = require('./routes/fileUpload.routes');
 app.use('/upload', uploadRoutes)
