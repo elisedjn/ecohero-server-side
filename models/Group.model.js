@@ -16,6 +16,10 @@ const GroupSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  challenge:{
+    type: Schema.Types.ObjectId,
+    ref: "Challenge"
+  },
   members: [{
     type: Schema.Types.ObjectId,
     ref: "User"

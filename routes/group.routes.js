@@ -22,9 +22,9 @@ router.get('', (req, res) => {
 
 //Create a group // FULL ROUTE -> /groups/create
 router.post('/create', isLoggedIn, (req, res) => {
-  const {name, description, location, date, user} = req.body
+  const {name, description, location, date, user, challenge} = req.body
   let members = [user]
-  GroupModel.create({name, description, location, date, members})
+  GroupModel.create({name, description, location, date, members, challenge})
     .then((group) => {
       res.status(200).json(group)
     })
@@ -42,6 +42,7 @@ router.post('/create', isLoggedIn, (req, res) => {
 router.get('/:groupID', (req, res) => {
   GroupModel.findById(req.params.groupID)
     .populate('members')
+    .populate('challenge')
     .then((group) => {
       res.status(200).json(group)
     })
