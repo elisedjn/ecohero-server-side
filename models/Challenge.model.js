@@ -19,7 +19,8 @@ const ChallengeSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["individual", "group"]
+    enum: ["individual", "group"],
+    default: "individual"
   }
 })
 

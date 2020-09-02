@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const UserModel = require('../models/User.model')
-const AchievementModel = require('../models/Achievement.model')
 const ChallengeModel = require('../models/Challenge.model')
 
 const { isLoggedIn } = require('../helpers/auth-helper');
@@ -18,7 +16,7 @@ router.get("", (req, res) => {
     .catch((err) => {
       res.status(500).json({
         error: 'Something went wrong',
-        message: err
+        errorMessage: err
       })
     })
 })
@@ -32,7 +30,7 @@ router.get('/:challengeID', (req, res) => {
     .catch((err) => {
       res.status(500).json({
         error: 'Something went wrong',
-        message: err
+        errorMessage: err
        })
     })
 })
@@ -49,7 +47,7 @@ router.post('/create', isLoggedIn, (req, res) => {
       console.log(err)
       res.status(500).json({
         error: 'Something went wrong',
-        message: err
+        errorMessage: err
        })
     })
 })

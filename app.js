@@ -64,6 +64,11 @@ app.use("/api/groups", groupRoutes)
 const uploadRoutes = require('./routes/fileUpload.routes');
 app.use('/api/upload', uploadRoutes)
 
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 //Start the server to begin listening on a port
 // make sure you don't run it on port 3000 because 
 // your react app uses port 3000. 

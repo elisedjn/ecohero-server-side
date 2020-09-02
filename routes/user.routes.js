@@ -8,7 +8,7 @@ const AchievementModel = require("../models/Achievement.model");
 
 // Shows the users with the highest amount of points // FULL ROUTE -> /users/leaderboard
 router.get("/leaderboard", (req, res) => {
-  UserModel.find()
+  UserModel.find({ points: { $gt: 0 } })
     .sort({ points: -1 })
     .limit(100)
     .then((result) => {
