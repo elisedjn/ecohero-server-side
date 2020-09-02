@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const UserModel = require("../models/User.model");
 
 const { isLoggedIn } = require("../helpers/auth-helper"); // to check if user is loggedIn
+const { array } = require("../config/cloudinary.config");
 
 router.post("/signup", (req, res) => {
   const { username, email, password } = req.body;
@@ -22,7 +23,7 @@ router.post("/signup", (req, res) => {
   );
   if (!myRegex.test(email)) {
     res.status(500).json({
-      errorMessage: "Email format not correct",
+      errorMessage: "The email format is not correct",
     });
     return;
   }
@@ -45,12 +46,19 @@ router.post("/signup", (req, res) => {
           res.status(200).json(user);
         })
         .catch((err) => {
-          if (err.code === 11000) {
+          console.log(err)
+          if (err.code === 11000 && Object.keys(err.keyPattern).includes('username')) {
             res.status(500).json({
-              errorMessage: "username or email entered already exists!",
+              errorMessage: "This username is already in use! Please choose another one",
             });
             return;
-          } else {
+          } else if (err.code === 11000 && Object.keys(err.keyPattern).includes('email')){
+            res.status(500).json({
+              errorMessage: "This email is already in use! Please choose another one or login",
+            });
+            return;
+          }
+          else {
             console.log(err)
             res.status(500).json({
               errorMessage: "Something went wrong! Please try again.",
@@ -66,7 +74,7 @@ router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(500).json({
-      error: "Please enter email and password",
+      errorMessage: "Please enter email and password",
     });
     return;
   }
@@ -75,7 +83,7 @@ router.post("/signin", (req, res) => {
   );
   if (!myRegex.test(email)) {
     res.status(500).json({
-      error: "Email format is not correct",
+      errorMessage: "Email format is not correct",
     });
     return;
   }
@@ -90,14 +98,14 @@ router.post("/signin", (req, res) => {
             res.status(200).json(userData);
           } else {
             res.status(500).json({
-              error: "Passwords don't match",
+              errorMessage: "Passwords don't match. Please try again",
             });
             return;
           }
         })
         .catch(() => {
           res.status(500).json({
-            error: "Email format is not correct",
+            errorMessage: "Email format is not correct",
           });
           return;
         });
@@ -105,7 +113,7 @@ router.post("/signin", (req, res) => {
     //throw an error if the user does not exists
     .catch((err) => {
       res.status(500).json({
-        error: 'This user does not exist'
+        errorMessage: 'This user does not exist. Please Sign Up first.'
       })
       return;
     });

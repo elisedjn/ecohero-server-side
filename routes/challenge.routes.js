@@ -37,11 +37,11 @@ router.get('/:challengeID', (req, res) => {
     })
 })
 
-// Create a new challenge // FULL ROUTE -> challenges/create
+// Create a new challenge // FULL ROUTE -> /challenges/create
 router.post('/create', isLoggedIn, (req, res) => {
-  const {title, description, points} = req.body
+  const {title, description, points, fact} = req.body
   console.log(req.body)
-  ChallengeModel.create({title, description, points})
+  ChallengeModel.create({title, description, points, fact})
     .then((challenge) => {
       res.status(200).json(challenge)
     })

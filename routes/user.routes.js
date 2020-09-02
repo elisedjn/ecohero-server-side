@@ -54,7 +54,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
   );
   if (!myRegex.test(email)) {
     res.status(500).json({
-      errorMessage: "Email format not correct",
+      errorMessage: "The email format is not correct",
     });
     return;
   }
@@ -83,7 +83,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
             console.log(err);
             res.status(500).json({
               error: "Something went wrong",
-              message: err,
+              errorMessage: err,
             });
           });
       });
@@ -102,7 +102,7 @@ router.patch("/:id/edit", isLoggedIn, (req, res) => {
         console.log(err);
         res.status(500).json({
           error: "Something went wrong",
-          message: err,
+          errorMessage: err,
         });
       });
   }

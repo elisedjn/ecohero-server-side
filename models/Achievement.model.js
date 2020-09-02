@@ -19,6 +19,10 @@ const AchievementSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User"
   },
+  group: {
+    type: Schema.Types.ObjectId,
+    ref: "Group"
+  },
   starting_date: {
     type: Date,
     default: Date.now()

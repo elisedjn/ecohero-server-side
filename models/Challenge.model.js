@@ -16,6 +16,10 @@ const ChallengeSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User"
+  },
+  status: {
+    type: String,
+    enum: ["individual", "group"]
   }
 })
 
