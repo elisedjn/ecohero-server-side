@@ -58,7 +58,7 @@ app.use("/api/achievements", achievementRoutes)
 
 //Group routes
 const groupRoutes = require("./routes/group.routes");
-app.use("/groups", groupRoutes)
+app.use("/api/groups", groupRoutes)
 
 // Upload routes
 const uploadRoutes = require('./routes/fileUpload.routes');
