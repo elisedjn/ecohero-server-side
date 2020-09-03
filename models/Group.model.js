@@ -5,7 +5,6 @@ const GroupSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true
   },
   description: String,
   location: {

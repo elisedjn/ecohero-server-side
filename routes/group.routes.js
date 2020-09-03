@@ -90,7 +90,7 @@ router.patch('/valid/:groupID', isLoggedIn, (req, res) => {
 
 
 // Get all the events of a specific user // FULL ROUTE -> /groups/user/:userID
-router.get('/user/:userID',isLoggedIn, (req, res) => {
+router.get('/user/:userID', (req, res) => {
   GroupModel.find({members: req.params.userID})
   .populate('members')
   .populate('challenge')
@@ -106,6 +106,20 @@ router.get('/user/:userID',isLoggedIn, (req, res) => {
   })
 })
 
+// Delete an event // FULL ROUTE -> /groups/:groupID
+router.delete('/:groupID', isLoggedIn, (req, res) => {
+  GroupModel.findByIdAndDelete(req.params.groupID)
+  .then((response) => {
+    res.status(200).json(response)
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).json({
+      error: 'Something went wrong',
+      message: err
+     })
+  })
+})
 
 module.exports = router;
 
