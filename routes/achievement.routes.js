@@ -29,6 +29,7 @@ router.post('/create/:challengeID/:userID', isLoggedIn, (req, res) => {
   let newAchievement = {
     challenge: req.params.challengeID, 
     user: req.params.userID,
+    group: req.body.group ? req.body.group : null
   }
   AchievementModel.create(newAchievement)
     .then((response) => {
