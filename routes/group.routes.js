@@ -8,7 +8,7 @@ const { route } = require("./auth.routes");
 
 
 //Get all groups available // FULL ROUTE -> /groups
-router.get('', isLoggedIn, (req, res) => {
+router.get('', (req, res) => {
   GroupModel.find()
     .then((response) => {
       res.status(200).json(response)
@@ -41,7 +41,7 @@ router.post('/create', isLoggedIn, (req, res) => {
 
 
 //Get a specific group based on it's id // FULL ROUTE -> /groups/:groupID
-router.get('/:groupID', isLoggedIn, (req, res) => {
+router.get('/:groupID', (req, res) => {
   GroupModel.findById(req.params.groupID)
     .populate('members')
     .populate('challenge')
