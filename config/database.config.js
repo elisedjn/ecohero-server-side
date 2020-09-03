@@ -6,7 +6,7 @@ let configOptions = {
     useUnifiedTopology: true 
 }
 
-let MONGODB_URI = process.env.MONGODB_URI ||
+let MONGODB_URI = process.env.MONGODB_URI
 
 //|| 'mongodb://localhost:27017/EcoHero'
 
